@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Start Your Project | Lexis Sapphire Studio</title>
+<meta name="description" content="Tell Lexis Sapphire Studio about your project. iOS app development, website design, social media management, event promotion, and bookkeeping services for small businesses and founders.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- HERO -->
+<header class="hero">
+  <div class="hero-inner">
+    <a href="https://rishaofficial.github.io/lexis-sapphire-studio/" class="logo-link">
+      <img src="logo.png" alt="Lexis Sapphire Studio" class="logo-mark">
+      <span class="wordmark">Lexis Sapphire Studio</span>
+    </a>
+    <h1>Let's build something<br><em>beautiful</em> together.</h1>
+    <p class="hero-sub">Tell us about your project and we'll get back to you with next steps and pricing.</p>
+  </div>
+</header>
+
+<!-- FORM -->
+<main class="form-wrap">
+  <div class="progress-bar">
+    <div class="progress-fill" id="progressFill" style="width: 25%"></div>
+  </div>
+  <div class="progress-labels">
+    <span class="progress-step active" data-step="1">About You</span>
+    <span class="progress-step" data-step="2">Your Project</span>
+    <span class="progress-step" data-step="3">Budget &amp; Timeline</span>
+    <span class="progress-step" data-step="4">Anything Else</span>
+  </div>
+
+  <form id="intakeForm" novalidate>
+    <!-- STEP 1: ABOUT YOU -->
+    <section class="form-step active" data-step="1">
+      <h2>About You</h2>
+      <p class="step-intro">First, a little about who you are.</p>
+
+      <div class="field">
+        <label for="name">Your name <span class="required">*</span></label>
+        <input type="text" id="name" name="entry.31923171" required placeholder="Jane Smith" autocomplete="name">
+        <span class="error-msg">Please enter your name.</span>
+      </div>
+
+      <div class="field">
+        <label for="business">Business name <span class="required">*</span></label>
+        <input type="text" id="business" name="entry.384326538" required placeholder="Your Business LLC" autocomplete="organization">
+        <span class="error-msg">Please enter your business name.</span>
+      </div>
+
+      <div class="field">
+        <label for="email">Email <span class="required">*</span></label>
+        <input type="email" id="email" name="entry.103151213" required placeholder="you@yourbusiness.com" autocomplete="email">
+        <span class="error-msg">Please enter a valid email address.</span>
+      </div>
+
+      <div class="field">
+        <label for="phone">Phone number</label>
+        <input type="tel" id="phone" name="entry.982479533" placeholder="(313) 555-0123" autocomplete="tel">
+      </div>
+
+      <div class="step-nav">
+        <button type="button" class="btn btn-primary" data-next="2">Continue</button>
+      </div>
+    </section>
+
+    <!-- STEP 2: YOUR PROJECT -->
+    <section class="form-step" data-step="2">
+      <h2>Your Project</h2>
+      <p class="step-intro">What can we help you with?</p>
+
+      <div class="field">
+        <label>What services do you need? <span class="required">*</span></label>
+        <div class="checkbox-grid">
+          <label class="check-card">
+            <input type="checkbox" name="entry.1297644646" value="Social media management">
+            <span class="check-card-inner">
+              <span class="check-icon">📱</span>
+              <span class="check-label">Social Media Management</span>
+            </span>
+          </label>
+          <label class="check-card">
+            <input type="checkbox" name="entry.1297644646" value="Website design/build">
+            <span class="check-card-inner">
+              <span class="check-icon">🌐</span>
+              <span class="check-label">Website Design / Build</span>
+            </span>
+          </label>
+          <label class="check-card">
+            <input type="checkbox" name="entry.1297644646" value="iOS app development">
+            <span class="check-card-inner">
+              <span class="check-icon">📲</span>
+              <span class="check-label">iOS App Development</span>
+            </span>
+          </label>
+          <label class="check-card">
+            <input type="checkbox" name="entry.1297644646" value="Bookkeeping">
+            <span class="check-card-inner">
+              <span class="check-icon">📊</span>
+              <span class="check-label">Bookkeeping</span>
+            </span>
+          </label>
+          <label class="check-card">
+            <input type="checkbox" name="entry.1297644646" value="Event promotion (Eventbrite, etc.)">
+            <span class="check-card-inner">
+              <span class="check-icon">🎉</span>
+              <span class="check-label">Event Promotion</span>
+            </span>
+          </label>
+          <label class="check-card">
+            <input type="checkbox" name="entry.1297644646" value="__other_option__">
+            <span class="check-card-inner">
+              <span class="check-icon">✦</span>
+              <span class="check-label">Something Else</span>
+            </span>
+          </label>
+        </div>
+        <span class="error-msg" id="servicesError">Please select at least one service.</span>
+      </div>
+
+      <div class="field">
+        <label for="aboutBusiness">Tell me about your business</label>
+        <textarea id="aboutBusiness" name="entry.2139898270" rows="4" placeholder="What do you do? Who are your customers? What makes you different?"></textarea>
+      </div>
+
+      <div class="field">
+        <label for="goals">What are your main goals for this project?</label>
+        <textarea id="goals" name="entry.1248639966" rows="4" placeholder="More customers, a professional online presence, streamline your finances..."></textarea>
+      </div>
+
+      <div class="field">
+        <label for="existingAccounts">Do you already have a website or social media accounts?</label>
+        <textarea id="existingAccounts" name="entry.1660517748" rows="3" placeholder="List URLs if yes"></textarea>
+      </div>
+
+      <div class="step-nav">
+        <button type="button" class="btn btn-ghost" data-prev="1">Back</button>
+        <button type="button" class="btn btn-primary" data-next="3">Continue</button>
+      </div>
+    </section>
+
+    <!-- STEP 3: BUDGET & TIMELINE -->
+    <section class="form-step" data-step="3">
+      <h2>Budget &amp; Timeline</h2>
+      <p class="step-intro">So we can scope the right solution for you.</p>
+
+      <div class="field">
+        <label>What's your timeline?</label>
+        <div class="radio-grid">
+          <label class="radio-card">
+            <input type="radio" name="entry.547483539" value="ASAP">
+            <span class="radio-card-inner">ASAP</span>
+          </label>
+          <label class="radio-card">
+            <input type="radio" name="entry.547483539" value="Within 2 weeks">
+            <span class="radio-card-inner">Within 2 weeks</span>
+          </label>
+          <label class="radio-card">
+            <input type="radio" name="entry.547483539" value="Within a month">
+            <span class="radio-card-inner">Within a month</span>
+          </label>
+          <label class="radio-card">
+            <input type="radio" name="entry.547483539" value="Flexible / just exploring">
+            <span class="radio-card-inner">Flexible / just exploring</span>
+          </label>
+        </div>
+      </div>
+
+      <div class="field">
+        <label>What's your budget range?</label>
+        <div class="radio-grid">
+          <label class="radio-card">
+            <input type="radio" name="entry.1455669567" value="Under $500">
+            <span class="radio-card-inner">Under $500</span>
+          </label>
+          <label class="radio-card">
+            <input type="radio" name="entry.1455669567" value="$500 - $1,000">
+            <span class="radio-card-inner">$500 - $1,000</span>
+          </label>
+          <label class="radio-card">
+            <input type="radio" name="entry.1455669567" value="$1,000 - $2,500">
+            <span class="radio-card-inner">$1,000 - $2,500</span>
+          </label>
+          <label class="radio-card">
+            <input type="radio" name="entry.1455669567" value="$2,500 - $5,000">
+            <span class="radio-card-inner">$2,500 - $5,000</span>
+          </label>
+          <label class="radio-card">
+            <input type="radio" name="entry.1455669567" value="$5,000+">
+            <span class="radio-card-inner">$5,000+</span>
+          </label>
+          <label class="radio-card">
+            <input type="radio" name="entry.1455669567" value="Not sure yet">
+            <span class="radio-card-inner">Not sure yet</span>
+          </label>
+        </div>
+      </div>
+
+      <div class="step-nav">
+        <button type="button" class="btn btn-ghost" data-prev="2">Back</button>
+        <button type="button" class="btn btn-primary" data-next="4">Continue</button>
+      </div>
+    </section>
+
+    <!-- STEP 4: ANYTHING ELSE -->
+    <section class="form-step" data-step="4">
+      <h2>Anything Else?</h2>
+      <p class="step-intro">Last one. Anything we should know before we get started?</p>
+
+      <div class="field">
+        <label for="anythingElse">Anything else I should know?</label>
+        <textarea id="anythingElse" name="entry.170919967" rows="5" placeholder="Questions, concerns, inspiration, links to things you like..."></textarea>
+      </div>
+
+      <div class="step-nav">
+        <button type="button" class="btn btn-ghost" data-prev="3">Back</button>
+        <button type="submit" class="btn btn-primary btn-submit" id="submitBtn">Send My Project Details</button>
+      </div>
+      <p class="privacy-note">We never share your information. Your details go straight to our team.</p>
+    </section>
+  </form>
+
+  <!-- SUCCESS SCREEN -->
+  <div class="success-screen" id="successScreen" hidden>
+    <div class="success-icon">✦</div>
+    <h2>Thank you!</h2>
+    <p>We've received your project details. We'll review everything and get back to you within 1-2 business days with next steps and pricing.</p>
+    <a href="https://rishaofficial.github.io/lexis-sapphire-studio/" class="btn btn-primary">Back to Lexis Sapphire Studio</a>
+  </div>
+</main>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <p><strong>Lexis Sapphire Studio</strong></p>
+  <p>Detroit-based, available for remote work.</p>
+  <p><a href="mailto:lexissapphire@gmail.com">lexissapphire@gmail.com</a> &nbsp;·&nbsp; <a href="https://rishaofficial.github.io/lexis-sapphire-studio/">lexis-sapphire-studio</a></p>
+</footer>
+
+<script src="script.js"></script>
+</body>
+</html>
