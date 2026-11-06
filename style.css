@@ -134,6 +134,8 @@ body {
   transition: color 0.3s;
   text-align: center;
   flex: 1;
+  line-height: 1.4;
+  min-height: 2em;
 }
 .progress-step.active { color: var(--gold-light); }
 
@@ -348,7 +350,8 @@ textarea { resize: vertical; min-height: 100px; }
   .hero { padding: 36px 20px 56px; }
   #intakeForm { padding: 28px 20px; border-radius: 16px; }
   .checkbox-grid, .radio-grid { grid-template-columns: 1fr; }
-  .progress-labels { font-size: 0.62rem; }
+  .progress-labels { font-size: 0.6rem; gap: 2px; }
+  .progress-step { line-height: 1.3; }
   .step-nav { flex-direction: column-reverse; }
   .step-nav .btn { width: 100%; }
 }
