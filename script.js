@@ -73,6 +73,62 @@
     });
   });
 
+  // Social media follow-up section: show when Social Media is selected
+  var socialCheckbox = form.querySelector('input[name="entry.1297644646"][value="Social media management"]');
+  var socialDetails = document.getElementById('socialDetails');
+  var handlesField = document.getElementById('handlesField');
+
+  function toggleSocial() {
+    socialDetails.hidden = !socialCheckbox.checked;
+  }
+  socialCheckbox.addEventListener('change', toggleSocial);
+  toggleSocial();
+
+  // Show handles field only when they say they have accounts
+  form.querySelectorAll('input[name="sm_has_accounts"]').forEach(function (radio) {
+    radio.addEventListener('change', function () {
+      var checked = form.querySelector('input[name="sm_has_accounts"]:checked');
+      handlesField.hidden = !checked || checked.value !== 'Yes';
+    });
+  });
+
+  function checkedValues(name) {
+    var out = [];
+    form.querySelectorAll('input[name="' + name + '"]:checked').forEach(function (el) {
+      out.push(el.value);
+    });
+    return out;
+  }
+
+  function checkedValue(name) {
+    var el = form.querySelector('input[name="' + name + '"]:checked');
+    return el ? el.value : '';
+  }
+
+  // Compile social media answers into a text block for the Google Form
+  // (appended to the "Anything Else" field so it lands in the response sheet)
+  function socialSummary() {
+    if (!socialCheckbox.checked) return '';
+    var lines = ['Social Media Details:'];
+    var platforms = checkedValues('sm_platforms');
+    if (platforms.length) lines.push('Platforms: ' + platforms.join(', '));
+    var content = checkedValues('sm_content');
+    if (content.length) lines.push('Content needed: ' + content.join(', '));
+    var freq = checkedValue('sm_frequency');
+    if (freq) lines.push('Posts per week: ' + freq);
+    var hasAccts = checkedValue('sm_has_accounts');
+    if (hasAccts) {
+      var handles = document.getElementById('smHandles').value.trim();
+      lines.push('Existing accounts: ' + hasAccts + (handles ? ' (' + handles + ')' : ''));
+    }
+    var goal = checkedValue('sm_goal');
+    if (goal) lines.push('Main goal: ' + goal);
+    var assets = checkedValue('sm_assets');
+    if (assets) lines.push('Brand assets: ' + assets);
+    if (lines.length === 1) return '';
+    return lines.join('\n');
+  }
+
   // Submit
   form.addEventListener('submit', function (e) {
     e.preventDefault();
@@ -81,6 +137,15 @@
     var submitBtn = document.getElementById('submitBtn');
     submitBtn.disabled = true;
     submitBtn.textContent = 'Sending...';
+
+    // Fold the social media answers into the Anything Else field
+    var summary = socialSummary();
+    if (summary) {
+      var anythingElse = document.getElementById('anythingElse');
+      anythingElse.value = anythingElse.value.trim()
+        ? anythingElse.value.trim() + '\n\n' + summary
+        : summary;
+    }
 
     var data = new URLSearchParams();
     var formData = new FormData(form);

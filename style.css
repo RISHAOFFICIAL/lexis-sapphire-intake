@@ -212,9 +212,32 @@ textarea { resize: vertical; min-height: 100px; }
 }
 .field.invalid .error-msg { display: block; }
 
+/* SOCIAL MEDIA FOLLOW-UP PANEL */
+.social-details {
+  background: linear-gradient(135deg, rgba(184,136,42,0.08), rgba(184,136,42,0.02));
+  border: 1.5px solid rgba(184,136,42,0.45);
+  border-radius: 16px;
+  padding: 24px 22px 6px;
+  margin-bottom: 22px;
+  animation: fadeSlide 0.4s ease;
+}
+.social-details[hidden] { display: none; }
+.social-title {
+  font-family: var(--serif);
+  font-size: 1.35rem;
+  font-weight: 600;
+  color: var(--navy);
+  margin-bottom: 4px;
+}
+.social-intro {
+  color: var(--gray-text);
+  font-size: 0.92rem;
+  margin-bottom: 20px;
+}
+#handlesField[hidden] { display: none; }
+
 /* CHECKBOX CARDS */
-.checkbox-grid {
-  display: grid;
+.checkbox-grid {  display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 12px;
 }
