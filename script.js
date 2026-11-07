@@ -88,7 +88,7 @@
   form.querySelectorAll('input[name="sm_has_accounts"]').forEach(function (radio) {
     radio.addEventListener('change', function () {
       var checked = form.querySelector('input[name="sm_has_accounts"]:checked');
-      handlesField.hidden = !checked || checked.value !== 'Yes';
+      handlesField.hidden = !checked || (checked.value !== 'Yes' && checked.value !== 'Yes, but I want more accounts');
     });
   });
 
