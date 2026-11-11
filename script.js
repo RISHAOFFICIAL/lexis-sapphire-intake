@@ -2,7 +2,8 @@
 // Submits to Google Forms backend (entry IDs from the published form)
 (function () {
   var FORM_URL = 'https://docs.google.com/forms/d/e/1FAIpQLScXH-zD2aH-HxQcvTFRnneqHLuyVAVkkvTK12Wn8VYbvkF-kA/formResponse';
-  var FBZX = '7876472961041077507';
+  // NOTE: No hardcoded fbzx token. Google rotates it on every page load and
+  // the formResponse endpoint accepts submissions without one.
 
   var form = document.getElementById('intakeForm');
   var steps = document.querySelectorAll('.form-step');
@@ -153,8 +154,21 @@
       data.append(key, value);
     });
     data.append('fvv', '1');
-    data.append('pageHistory', '0,1,2,3');
-    data.append('fbzx', FBZX);
+    // Single-page form (no page breaks), so pageHistory is just page 0.
+    data.append('pageHistory', '0');
+
+    // mode: 'no-cors' means the browser hands us an opaque response: we
+    // cannot read the HTTP status, but fetch resolves only when Google
+    // actually answered the request, and rejects on network failure.
+    // Success is shown ONLY when the request was delivered; any failure
+    // shows the error screen instead. Never show success on failure.
+    var settled = false;
+    var timeoutId = setTimeout(function () {
+      if (!settled) {
+        settled = true;
+        showError();
+      }
+    }, 20000);
 
     fetch(FORM_URL, {
       method: 'POST',
@@ -162,11 +176,17 @@
       headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
       body: data.toString()
     }).then(function () {
-      showSuccess();
+      if (!settled) {
+        settled = true;
+        clearTimeout(timeoutId);
+        showSuccess();
+      }
     }).catch(function () {
-      // no-cors means we cannot read the response, but the POST still goes through.
-      // Show success anyway since the request was sent.
-      showSuccess();
+      if (!settled) {
+        settled = true;
+        clearTimeout(timeoutId);
+        showError();
+      }
     });
   });
 
@@ -177,4 +197,24 @@
     document.getElementById('successScreen').hidden = false;
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }
+
+  function showError() {
+    var submitBtn = document.getElementById('submitBtn');
+    submitBtn.disabled = false;
+    submitBtn.textContent = 'Send My Project Details';
+    form.style.display = 'none';
+    document.querySelector('.progress-bar').style.display = 'none';
+    document.querySelector('.progress-labels').style.display = 'none';
+    document.getElementById('errorScreen').hidden = false;
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  // "Try Again" on the error screen: bring the form back with answers intact
+  document.getElementById('retryBtn').addEventListener('click', function () {
+    document.getElementById('errorScreen').hidden = true;
+    document.querySelector('.progress-bar').style.display = '';
+    document.querySelector('.progress-labels').style.display = '';
+    form.style.display = '';
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  });
 })();
