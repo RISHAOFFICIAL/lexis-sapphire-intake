@@ -130,6 +130,26 @@
     return lines.join('\n');
   }
 
+  // Submit via a NATIVE form POST into a hidden iframe, the same mechanism
+  // Google's own form uses. Scripted fetch() POSTs to formResponse are
+  // unreliable (Google silently drops the answers or rejects them), while
+  // a real browser form navigation is what the endpoint is built for.
+  // The iframe's load event means Google answered the submission.
+  var responseFrame = document.createElement('iframe');
+  responseFrame.name = 'gformResponse';
+  responseFrame.style.display = 'none';
+  document.body.appendChild(responseFrame);
+
+  var submitPending = false;
+  var submitTimeoutId = null;
+
+  responseFrame.addEventListener('load', function () {
+    if (!submitPending) return; // ignore the initial about:blank load
+    clearTimeout(submitTimeoutId);
+    submitPending = false;
+    showSuccess();
+  });
+
   // Submit
   form.addEventListener('submit', function (e) {
     e.preventDefault();
@@ -148,46 +168,23 @@
         : summary;
     }
 
-    var data = new URLSearchParams();
-    var formData = new FormData(form);
-    formData.forEach(function (value, key) {
-      data.append(key, value);
-    });
-    data.append('fvv', '1');
-    // Single-page form (no page breaks), so pageHistory is just page 0.
-    data.append('pageHistory', '0');
+    // Google's own form stamps the submit time; do the same.
+    document.getElementById('submissionTimestamp').value = String(Date.now());
 
-    // mode: 'no-cors' means the browser hands us an opaque response: we
-    // cannot read the HTTP status, but fetch resolves only when Google
-    // actually answered the request, and rejects on network failure.
-    // Success is shown ONLY when the request was delivered; any failure
-    // shows the error screen instead. Never show success on failure.
-    var settled = false;
-    var timeoutId = setTimeout(function () {
-      if (!settled) {
-        settled = true;
+    // If Google never answers (network failure), show the error screen
+    // instead of leaving the client hanging or faking a success.
+    submitPending = true;
+    submitTimeoutId = setTimeout(function () {
+      if (submitPending) {
+        submitPending = false;
         showError();
       }
-    }, 20000);
+    }, 25000);
 
-    fetch(FORM_URL, {
-      method: 'POST',
-      mode: 'no-cors',
-      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-      body: data.toString()
-    }).then(function () {
-      if (!settled) {
-        settled = true;
-        clearTimeout(timeoutId);
-        showSuccess();
-      }
-    }).catch(function () {
-      if (!settled) {
-        settled = true;
-        clearTimeout(timeoutId);
-        showError();
-      }
-    });
+    form.action = FORM_URL;
+    form.method = 'POST';
+    form.target = 'gformResponse';
+    form.submit();
   });
 
   function showSuccess() {

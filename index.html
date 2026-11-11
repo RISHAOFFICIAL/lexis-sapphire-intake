@@ -37,6 +37,13 @@
   </div>
 
   <form id="intakeForm" novalidate>
+    <!-- Hidden fields Google's formResponse endpoint expects on a native submit -->
+    <input type="hidden" name="fvv" value="1">
+    <input type="hidden" name="pageHistory" value="0">
+    <input type="hidden" name="submissionTimestamp" id="submissionTimestamp" value="-1">
+    <input type="hidden" name="entry.1438503844_sentinel" value="">
+    <input type="hidden" name="entry.1524107362_sentinel" value="">
+    <input type="hidden" name="entry.725774228_sentinel" value="">
     <!-- STEP 1: ABOUT YOU -->
     <section class="form-step active" data-step="1">
       <h2>About You</h2>
